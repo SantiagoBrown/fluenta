@@ -1,0 +1,470 @@
+/* ============================================================
+   Progress
+   ============================================================ */
+
+.progress-head-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex: none;
+  padding: 12px 20px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.progress-head-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.progress-level {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.progress-head-card > div:last-child > span:last-child {
+  font-size: 9.5px;
+  color: var(--muted);
+}
+
+.level-ladder-card {
+  padding: 24px 28px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.level-ladder-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.level-ladder-head h2 {
+  margin-top: 5px;
+  font-size: 24px;
+}
+
+.level-ladder-card .ladder {
+  margin: 16px 0 22px;
+}
+
+.level-ladder-labels {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.level-ladder-item {
+  opacity: 0.48;
+}
+
+.level-ladder-item.reached {
+  opacity: 1;
+}
+
+.level-ladder-item strong {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 23px;
+  height: 21px;
+  padding: 0 5px;
+  border-radius: 6px;
+  background: rgba(20, 33, 28, 0.06);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.level-ladder-item.reached strong {
+  background: var(--forest);
+  color: var(--lime);
+}
+
+.level-ladder-item > span {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.level-ladder-item p {
+  margin-top: 2px;
+  font-size: 9px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.progress-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  align-items: start;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.progress-radar-panel .radar {
+  max-width: 390px;
+  margin: 0 auto;
+}
+
+.progress-skill-table {
+  display: grid;
+  gap: 7px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.progress-skill-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 45px 26px;
+  align-items: center;
+  gap: 9px;
+  font-size: 10px;
+}
+
+.progress-skill-row .bar-track {
+  height: 5px;
+}
+
+.progress-skill-row > strong {
+  font-size: 10px;
+  text-align: right;
+}
+
+.progress-side {
+  display: grid;
+  gap: 18px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--line);
+}
+
+.stats-grid > div {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: var(--paper);
+}
+
+.stats-grid strong {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.stats-grid span {
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.target-date {
+  display: flex;
+  gap: 9px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(217, 243, 107, 0.2);
+}
+
+.target-date svg {
+  flex: none;
+  margin-top: 2px;
+  color: #55661c;
+}
+
+.target-date strong {
+  display: block;
+  font-size: 10px;
+}
+
+.target-date span {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.milestone-panel > p {
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.milestone-progress {
+  margin: 13px 0 14px;
+}
+
+.milestone-progress span {
+  display: block;
+  margin-top: 5px;
+  font-size: 8.5px;
+  color: var(--muted);
+}
+
+/* Heatmap */
+
+.heatmap-panel {
+  margin-bottom: 18px;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: none;
+  font-size: 8px;
+  color: var(--muted-light);
+}
+
+.heatmap-legend span {
+  margin: 0 3px;
+}
+
+.heatmap-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.heatmap {
+  display: flex;
+  gap: 6px;
+  padding: 4px 0;
+  overflow-x: auto;
+}
+
+.heatmap-days {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1px 3px 1px 0;
+  font-size: 7.5px;
+  color: var(--muted-light);
+}
+
+.heatmap-days span {
+  height: 12px;
+  line-height: 12px;
+}
+
+.heatmap-weeks {
+  display: flex;
+  gap: 3px;
+}
+
+.heatmap-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heat-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: rgba(20, 33, 28, 0.06);
+}
+
+.heat-1 {
+  background: rgba(188, 217, 78, 0.35);
+}
+
+.heat-2 {
+  background: rgba(188, 217, 78, 0.62);
+}
+
+.heat-3 {
+  background: rgba(161, 196, 45, 0.82);
+}
+
+.heat-4 {
+  background: #7d961f;
+}
+
+.heat-empty {
+  background: transparent;
+}
+
+.heatmap-legend .heat-1,
+.heatmap-legend .heat-2,
+.heatmap-legend .heat-3,
+.heatmap-legend .heat-4 {
+  background: rgba(20, 33, 28, 0.06);
+}
+
+.heatmap-legend .heat-1 { background: rgba(188, 217, 78, 0.35); }
+.heatmap-legend .heat-2 { background: rgba(188, 217, 78, 0.62); }
+.heatmap-legend .heat-3 { background: rgba(161, 196, 45, 0.82); }
+.heatmap-legend .heat-4 { background: #7d961f; }
+
+.heatmap-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.heatmap-foot span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.heatmap-foot svg {
+  color: #c2654d;
+}
+
+/* Bottom grid */
+
+.progress-bottom-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  align-items: start;
+  gap: 18px;
+}
+
+.writing-chart {
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+}
+
+.chart-target {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  fill: var(--coral);
+}
+
+.chart-value {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 600;
+  fill: var(--ink);
+}
+
+.writing-chart-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 8px;
+  font-size: 8.5px;
+  color: var(--muted);
+}
+
+.chart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 18px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 11px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.chart-empty svg {
+  margin-bottom: 8px;
+  color: var(--muted-light);
+}
+
+.chart-empty h3 {
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.chart-empty p {
+  max-width: 330px;
+  margin: 3px 0 10px;
+  font-size: 10px;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.badge-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  opacity: 0.42;
+  filter: grayscale(1);
+  transition: opacity 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
+}
+
+.badge-card.unlocked {
+  opacity: 1;
+  filter: none;
+  border-color: rgba(188, 217, 78, 0.6);
+  background: rgba(217, 243, 107, 0.1);
+}
+
+.badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  flex: none;
+  border-radius: 8px;
+  background: rgba(20, 33, 28, 0.06);
+  color: var(--ink-soft);
+}
+
+.badge-card.unlocked .badge-icon {
+  background: var(--forest);
+  color: var(--lime);
+}
+
+.badge-card > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.badge-card strong {
+  font-size: 9.5px;
+  font-weight: 600;
+}
+
+.badge-card span:not(.badge-icon) {
+  font-size: 8px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.progress-page .panel-head .text-btn {
+  flex: none;
+}

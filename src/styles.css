@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import './styles/base.css';
+@import './styles/landing.css';
+@import './styles/flows.css';
+@import './styles/app.css';
+@import './styles/lesson.css';
+@import './styles/practice.css';
+@import './styles/writing.css';
+@import './styles/progress.css';
+@import './styles/settings.css';
+@import './styles/responsive.css';
