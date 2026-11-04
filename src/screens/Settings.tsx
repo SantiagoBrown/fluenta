@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import type { FormEvent } from 'react'
+import type { ChangeEvent, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
   Briefcase,
   Check,
   Code2,
+  Download,
   Globe2,
   HeartPulse,
   LineChart,
@@ -16,6 +17,7 @@ import {
   SlidersHorizontal,
   Sparkles,
   Trash2,
+  Upload,
   UserRound,
   Volume2,
 } from 'lucide-react'
@@ -48,7 +50,7 @@ const voiceSamples = [
 ]
 
 export default function Settings() {
-  const { state, updateProfile, updateSettings, resetAll } = useApp()
+  const { state, updateProfile, updateSettings, resetAll, activeUser, switchUser, exportData, importData } = useApp()
   const profile = state.profile!
 
   const [name, setName] = useState(profile.name)
@@ -60,8 +62,32 @@ export default function Settings() {
   const [autoPlay, setAutoPlay] = useState(state.settings.autoPlay)
   const [saved, setSaved] = useState(false)
   const [confirmReset, setConfirmReset] = useState(false)
+  const [importMessage, setImportMessage] = useState('')
 
   const sample = voiceSamples[Math.round((voiceRate - 0.6) * 4) % voiceSamples.length]
+
+  const exportFile = () => {
+    const blob = new Blob([exportData()], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `fluenta-progreso-${activeUser}.json`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const importFile = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      const success = importData(String(reader.result ?? ''))
+      setImportMessage(success ? 'Datos importados correctamente.' : 'No se pudo importar el archivo.')
+      window.setTimeout(() => setImportMessage(''), 3000)
+    }
+    reader.readAsText(file)
+    event.target.value = ''
+  }
 
   const save = (event: FormEvent) => {
     event.preventDefault()
@@ -266,6 +292,42 @@ export default function Settings() {
         </div>
 
         <aside className="settings-side">
+          <div className="panel settings-account-card">
+            <span className="eyebrow">Cuentas de Fluenta</span>
+            <div className="chip-grid account-user-switch">
+              <button
+                type="button"
+                className={`choice-chip ${activeUser === 'santiago' ? 'selected' : ''}`}
+                onClick={() => switchUser('santiago')}
+              >
+                Santiago
+              </button>
+              <button
+                type="button"
+                className={`choice-chip ${activeUser === 'elizabeth' ? 'selected' : ''}`}
+                onClick={() => switchUser('elizabeth')}
+              >
+                Elizabeth
+              </button>
+            </div>
+            <p className="settings-note">
+              Cada perfil guarda su propio progreso en este navegador. Cambia entre Santiago y Elizabeth sin mezclar
+              datos.
+            </p>
+            <div className="account-row">
+              <span>Progreso</span>
+              <strong>{state.progress.completedLessons.length} lecciones</strong>
+            </div>
+            <button type="button" className="btn btn-outline btn-block btn-sm" onClick={exportFile}>
+              <Download size={15} /> Exportar datos
+            </button>
+            <label className="btn btn-outline btn-block btn-sm" style={{ cursor: 'pointer' }}>
+              <Upload size={15} /> Importar datos
+              <input type="file" accept="application/json" onChange={importFile} hidden />
+            </label>
+            {importMessage && <span className="settings-saved">{importMessage}</span>}
+          </div>
+
           <div className="panel settings-save-card">
             <span className="eyebrow">Guardar cambios</span>
             <p>Los cambios se aplican a tu ruta y a tus próximas lecciones.</p>

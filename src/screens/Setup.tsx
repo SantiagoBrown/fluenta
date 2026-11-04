@@ -47,7 +47,7 @@ const motivations = [
 ]
 
 export default function Setup() {
-  const { state, setProfile } = useApp()
+  const { state, setProfile, switchUser, activeUser } = useApp()
   const navigate = useNavigate()
   const existing = state.profile
   const [name, setName] = useState(existing?.name ?? '')
@@ -105,14 +105,20 @@ export default function Setup() {
               <label className="field">
                 <span>¿Cómo te llamas?</span>
                 <div className="chip-grid name-presets">
-                  {['Santiago Benavidez Ramirez', 'Elizabeth Cuervo Poveda'].map((preset) => (
+                  {[
+                    { label: 'Santiago Benavidez Ramirez', user: 'santiago' as const },
+                    { label: 'Elizabeth Cuervo Poveda', user: 'elizabeth' as const },
+                  ].map((preset) => (
                     <button
                       type="button"
-                      key={preset}
-                      className={`choice-chip ${name === preset ? 'selected' : ''}`}
-                      onClick={() => setName(preset)}
+                      key={preset.label}
+                      className={`choice-chip ${name === preset.label ? 'selected' : ''}`}
+                      onClick={() => {
+                        setName(preset.label)
+                        switchUser(preset.user)
+                      }}
                     >
-                      {preset}
+                      {preset.label}
                     </button>
                   ))}
                 </div>

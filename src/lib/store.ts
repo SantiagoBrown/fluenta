@@ -40,12 +40,33 @@ export const defaultState: AppState = {
   },
 }
 
-const STORAGE_KEY = 'fluenta:state:v1'
+export type UserId = 'santiago' | 'elizabeth'
 
-export function loadState(): AppState {
+const ACTIVE_USER_KEY = 'fluenta:active-user'
+
+export function loadActiveUser(): UserId {
+  if (typeof window === 'undefined') return 'santiago'
+  try {
+    return window.localStorage.getItem(ACTIVE_USER_KEY) === 'elizabeth' ? 'elizabeth' : 'santiago'
+  } catch {
+    return 'santiago'
+  }
+}
+
+export function setActiveUser(user: UserId): void {
+  try {
+    window.localStorage.setItem(ACTIVE_USER_KEY, user)
+  } catch {
+    // Sin acción.
+  }
+}
+
+const STORAGE_KEY = (user: UserId) => `fluenta:state:v1:${user}`
+
+export function loadState(user: UserId = loadActiveUser()): AppState {
   if (typeof window === 'undefined') return defaultState
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY)
+    const raw = window.localStorage.getItem(STORAGE_KEY(user))
     if (!raw) return defaultState
     const parsed = JSON.parse(raw) as Partial<AppState>
     return {
@@ -59,17 +80,17 @@ export function loadState(): AppState {
   }
 }
 
-export function persistState(state: AppState): void {
+export function persistState(user: UserId, state: AppState): void {
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    window.localStorage.setItem(STORAGE_KEY(user), JSON.stringify(state))
   } catch {
     // Almacenamiento no disponible: la app sigue funcionando en memoria.
   }
 }
 
-export function clearState(): void {
+export function clearState(user: UserId = loadActiveUser()): void {
   try {
-    window.localStorage.removeItem(STORAGE_KEY)
+    window.localStorage.removeItem(STORAGE_KEY(user))
   } catch {
     // Sin acción.
   }

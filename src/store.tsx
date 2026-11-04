@@ -15,14 +15,21 @@ import {
   clearState,
   computeBadges,
   defaultState,
+  loadActiveUser,
   loadState,
   makeWritingSubmission,
   persistState,
+  setActiveUser,
   touchProgress,
 } from './lib/store'
+import type { UserId } from './lib/store'
 
 interface AppContextValue {
   state: AppState
+  activeUser: UserId
+  switchUser: (user: UserId) => void
+  exportData: () => string
+  importData: (json: string) => boolean
   setProfile: (profile: Profile) => void
   updateProfile: (partial: Partial<Profile>) => void
   savePlacement: (result: PlacementResult) => void
@@ -37,11 +44,13 @@ interface AppContextValue {
 const AppContext = createContext<AppContextValue | null>(null)
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AppState>(() => loadState())
+  const [activeUser, setActiveUserState] = useState<UserId>(() => loadActiveUser())
+  const [state, setState] = useState<AppState>(() => loadState(activeUser))
 
   useEffect(() => {
-    persistState(state)
-  }, [state])
+    setActiveUser(activeUser)
+    persistState(activeUser, state)
+  }, [activeUser, state])
 
   const value = useMemo<AppContextValue>(() => {
     const setProfile = (profile: Profile) => setState((current) => ({ ...current, profile }))
@@ -137,13 +146,51 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const updateSettings = (partial: Partial<Settings>) =>
       setState((current) => ({ ...current, settings: { ...current.settings, ...partial } }))
 
+    const switchUser = (user: UserId) => {
+      setActiveUserState(user)
+      setState(loadState(user))
+    }
+
+    const exportData = () =>
+      JSON.stringify(
+        {
+          user: activeUser,
+          version: state.version,
+          exportedAt: new Date().toISOString(),
+          state,
+        },
+        null,
+        2,
+      )
+
+    const importData = (json: string) => {
+      try {
+        const parsed = JSON.parse(json) as { state?: Partial<AppState> } | Partial<AppState>
+        const incoming = ('state' in parsed && parsed.state ? parsed.state : parsed) as Partial<AppState>
+        const next: AppState = {
+          ...defaultState,
+          ...incoming,
+          progress: { ...defaultState.progress, ...(incoming.progress ?? {}) },
+          settings: { ...defaultState.settings, ...(incoming.settings ?? {}) },
+        }
+        setState(next)
+        return true
+      } catch {
+        return false
+      }
+    }
+
     const resetAll = () => {
-      clearState()
+      clearState(activeUser)
       setState({ ...defaultState })
     }
 
     return {
       state,
+      activeUser,
+      switchUser,
+      exportData,
+      importData,
       setProfile,
       updateProfile,
       savePlacement,
@@ -154,7 +201,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       updateSettings,
       resetAll,
     }
-  }, [state])
+  }, [state, activeUser])
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
