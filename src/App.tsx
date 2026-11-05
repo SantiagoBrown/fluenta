@@ -10,6 +10,7 @@ import Path from './screens/Path'
 import LessonScreen from './screens/Lesson'
 import Practice from './screens/Practice'
 import WritingLab from './screens/WritingLab'
+import Chat from './screens/Chat'
 import Progress from './screens/Progress'
 import Settings from './screens/Settings'
 
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="lesson/:lessonId" element={<LessonScreen />} />
           <Route path="practice" element={<Practice />} />
           <Route path="writing" element={<WritingLab />} />
+          <Route path="chat" element={<Chat />} />
           <Route path="progress" element={<Progress />} />
           <Route path="settings" element={<Settings />} />
         </Route>

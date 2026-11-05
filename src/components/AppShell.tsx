@@ -4,6 +4,7 @@ import {
   Brain,
   Flame,
   LayoutDashboard,
+  MessageCircle,
   Menu,
   PenLine,
   Route as RouteIcon,
@@ -22,6 +23,7 @@ const navItems = [
   { to: '/app/path', label: 'Mi ruta', icon: RouteIcon },
   { to: '/app/practice', label: 'Práctica', icon: Brain },
   { to: '/app/writing', label: 'Writing Lab', icon: PenLine },
+  { to: '/app/chat', label: 'Chat', icon: MessageCircle },
   { to: '/app/progress', label: 'Progreso', icon: TrendingUp },
 ]
 
